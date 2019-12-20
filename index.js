@@ -11,11 +11,12 @@ function load(){
             res.end()
         }
         if(req.url === "/data"){
-            let fullDate = new Date()
-            let dataBefore = fullDate.getUTCHours() + ':' + fullDate.getUTCMinutes() + ':' + fullDate.getUTCSeconds()
-            fs.appendFileSync(path.join(__dirname, 'trading_log.txt'), dataBefore + os.EOL, 'utf8')
-            let dataAfter = fs.readFileSync(path.join(__dirname, 'trading_log.txt'))
-            res.write(dataAfter + os.EOL)
+            let dateObj = new Date()
+            let getMonth = dateObj.getUTCMonth() + 1
+            let date = dateObj.getUTCDate() + '-' + getMonth + '-' + dateObj.getUTCFullYear() + ' ' + dateObj.getUTCHours() + ':' + dateObj.getUTCMinutes() + ':' + dateObj.getUTCSeconds()
+            fs.appendFileSync(path.join(__dirname, 'trading_log.txt'), date + os.EOL, 'utf8')
+            let data = fs.readFileSync(path.join(__dirname, 'trading_log.txt'))
+            res.write(data + os.EOL)
             res.end()
         }
     })
